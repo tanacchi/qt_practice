@@ -2,21 +2,25 @@
 #define MAINWINDOW_HPP
 
 #include <QMainWindow>
+#include <QtWidgets>
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QWidget
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+  explicit MainWindow();
+
+private slots:
+  void quit();
 
 private:
-    Ui::MainWindow *ui;
+  QTextEdit* text_edit_;
+  QPushButton* quit_button_;
 };
 
 #endif // MAINWINDOW_HPP

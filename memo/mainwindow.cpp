@@ -1,14 +1,30 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+#include <QtWidgets>
+
+MainWindow::MainWindow()
+  : QWidget(nullptr)
 {
-    ui->setupUi(this);
+  text_edit_ = new QTextEdit();
+  quit_button_ = new QPushButton(tr("Quit"));
+  connect(quit_button_, SIGNAL(clicked()), this, SLOT(quit()));
+  QVBoxLayout *layout = new QVBoxLayout;
+  layout->addWidget(text_edit_);
+  layout->addWidget(quit_button_);
+
+  setLayout(layout);
+
+  setWindowTitle(tr("Notepad"));
 }
 
-MainWindow::~MainWindow()
+void MainWindow::quit()
 {
-    delete ui;
+  QMessageBox messageBox;
+  messageBox.setWindowTitle(tr("Notepad"));
+  messageBox.setText(tr("Do you really want to quit?"));
+  messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+  messageBox.setDefaultButton(QMessageBox::No);
+  if (messageBox.exec() == QMessageBox::Yes)
+      qApp->quit();
 }
