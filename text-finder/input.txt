@@ -1,0 +1,14 @@
+#include <stdio.h>
+
+int main()
+{
+  char str[3];
+  scanf("%3s", str);
+  putchar('\n');
+ 
+  fflush(stdin);
+  putchar(getchar());
+  /* fflush(stdout); */
+  
+  return 0;
+}
