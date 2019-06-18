@@ -40,7 +40,10 @@ void MainWindow::quit()
 
 void MainWindow::load()
 {
-  QString file_name = QFileDialog::getOpenFileName(this, tr("Open file"), "", tr("Text files (*.txt)"));
+  QString file_name = QFileDialog::getOpenFileName(this,
+                                                   tr("Open file"),
+                                                   "",
+                                                   tr("Text files (*.txt);; C++ files (*.cpp *.hpp)"));
   if (!file_name.isEmpty())
   {
     QFile file(file_name);
@@ -57,7 +60,10 @@ void MainWindow::load()
 
 void MainWindow::save()
 {
-  QString file_name = QFileDialog::getSaveFileName(this, tr("Save File"), "", tr("Text files (*txt)"));
+  QString file_name = QFileDialog::getSaveFileName(this,
+                                                   tr("Save File"),
+                                                   "",
+                                                   tr("Text files (*txt);; C++ files (*.cpp *.hpp)"));
   if (!file_name.isEmpty())
   {
     QFile file(file_name);
