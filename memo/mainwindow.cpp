@@ -40,6 +40,19 @@ void MainWindow::quit()
 
 void MainWindow::load()
 {
+  QString file_name = QFileDialog::getOpenFileName(this, tr("Open file"), "", tr("Text files (*.txt)"));
+  if (!file_name.isEmpty())
+  {
+    QFile file(file_name);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+      QMessageBox::critical(this, "Error", tr("Could not open file."));
+      return;
+    }
+    QTextStream in(&file);
+    text_edit_->setText(in.readAll());
+    file.close();
+  }
 }
 
 void MainWindow::save()
