@@ -8,7 +8,7 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QWidget
+class MainWindow : public QMainWindow
 {
   Q_OBJECT
 
@@ -17,10 +17,16 @@ public:
 
 private slots:
   void quit();
+  void load();
+  void save();
 
 private:
   QTextEdit* text_edit_;
-  QPushButton* quit_button_;
+  QAction* load_action_;
+  QAction* save_action_;
+  QAction* exit_action_;
+  QMenu* file_menu_;
+
 };
 
 #endif // MAINWINDOW_HPP
