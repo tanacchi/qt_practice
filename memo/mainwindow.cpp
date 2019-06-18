@@ -57,4 +57,21 @@ void MainWindow::load()
 
 void MainWindow::save()
 {
+  QString file_name = QFileDialog::getSaveFileName(this, tr("Save File"), "", tr("Text files (*txt)"));
+  if (!file_name.isEmpty())
+  {
+    QFile file(file_name);
+    if (file.open(QIODevice::WriteOnly))
+    {
+      QTextStream ostream(&file);
+      ostream << text_edit_->toPlainText();
+      ostream.flush();
+      file.close();
+    }
+    else
+    {
+      QMessageBox::critical(this, "Error", tr("Could not save file."));
+      return;
+    }
+  }
 }
