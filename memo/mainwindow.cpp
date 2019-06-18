@@ -4,26 +4,23 @@
 #include <QtWidgets>
 #include <QMenuBar>
 
-MainWindow::MainWindow()
-  :  QMainWindow(nullptr)
+MainWindow::MainWindow(): QMainWindow(nullptr)
+  , text_edit_ptr_{std::make_unique<QTextEdit>()}
+  , load_action_ptr_{std::make_unique<QAction>(tr("Load"))}
+  , save_action_ptr_{std::make_unique<QAction>(tr("Save"))}
+  , exit_action_ptr_{std::make_unique<QAction>(tr("Exit"))}
+  , file_menu_ptr_{menuBar()->addMenu(tr("File"))}
 {
-  load_action_ = new QAction(tr("&Load"), this);
-  save_action_ = new QAction(tr("&Save"), this);
-  exit_action_ = new QAction(tr("E&xit"), this);
+  connect(load_action_ptr_.get(), SIGNAL(triggered()), this, SLOT(load()));
+  connect(save_action_ptr_.get(), SIGNAL(triggered()), this, SLOT(save()));
+  connect(exit_action_ptr_.get(), SIGNAL(triggered()), qApp, SLOT(quit()));
 
-  connect(load_action_, SIGNAL(triggered()), this, SLOT(load()));
-  connect(save_action_, SIGNAL(triggered()), this, SLOT(save()));
-  connect(exit_action_, SIGNAL(triggered()), qApp, SLOT(quit()));
+  file_menu_ptr_->addAction(load_action_ptr_.get());
+  file_menu_ptr_->addAction(save_action_ptr_.get());
+  file_menu_ptr_->addSeparator();
+  file_menu_ptr_->addAction(exit_action_ptr_.get());
 
-  file_menu_ = menuBar()->addMenu(tr("File"));
-  file_menu_->addAction(load_action_);
-  file_menu_->addAction(save_action_);
-  file_menu_->addSeparator();
-  file_menu_->addAction(exit_action_);
-
-  text_edit_ = new QTextEdit();
-  setCentralWidget(text_edit_);
-
+  setCentralWidget(text_edit_ptr_.get());
   setWindowTitle(tr("Memo"));
 }
 
@@ -35,15 +32,13 @@ void MainWindow::quit()
   messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
   messageBox.setDefaultButton(QMessageBox::No);
   if (messageBox.exec() == QMessageBox::Yes)
-      qApp->quit();
+    qApp->quit();
 }
 
 void MainWindow::load()
 {
-  QString file_name = QFileDialog::getOpenFileName(this,
-                                                   tr("Open file"),
-                                                   "",
-                                                   tr("Text files (*.txt);; C++ files (*.cpp *.hpp)"));
+  QString file_name
+      = QFileDialog::getOpenFileName(this, tr("Open file"), "", tr("Text files (*.txt);; C++ files (*.cpp *.hpp)"));
   if (!file_name.isEmpty())
   {
     QFile file(file_name);
@@ -53,24 +48,22 @@ void MainWindow::load()
       return;
     }
     QTextStream in(&file);
-    text_edit_->setText(in.readAll());
+    text_edit_ptr_->setText(in.readAll());
     file.close();
   }
 }
 
 void MainWindow::save()
 {
-  QString file_name = QFileDialog::getSaveFileName(this,
-                                                   tr("Save File"),
-                                                   "",
-                                                   tr("Text files (*txt);; C++ files (*.cpp *.hpp)"));
+  QString file_name
+      = QFileDialog::getSaveFileName(this, tr("Save File"), "", tr("Text files (*txt);; C++ files (*.cpp *.hpp)"));
   if (!file_name.isEmpty())
   {
     QFile file(file_name);
     if (file.open(QIODevice::WriteOnly))
     {
       QTextStream ostream(&file);
-      ostream << text_edit_->toPlainText();
+      ostream << text_edit_ptr_->toPlainText();
       ostream.flush();
       file.close();
     }

@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
+#include <memory>
+
 #include <QMainWindow>
 #include <QtWidgets>
 
@@ -21,11 +23,11 @@ private slots:
   void save();
 
 private:
-  QTextEdit* text_edit_;
-  QAction* load_action_;
-  QAction* save_action_;
-  QAction* exit_action_;
-  QMenu* file_menu_;
+  std::unique_ptr<QTextEdit> text_edit_ptr_;
+  std::unique_ptr<QAction> load_action_ptr_;
+  std::unique_ptr<QAction> save_action_ptr_;
+  std::unique_ptr<QAction> exit_action_ptr_;
+  std::unique_ptr<QMenu> file_menu_ptr_;
 
 };
 
