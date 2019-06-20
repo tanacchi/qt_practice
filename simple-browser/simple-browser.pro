@@ -1,12 +1,12 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-06-20T13:57:00
+# Project created by QtCreator 2019-06-20T14:23:08
 #
 #-------------------------------------------------
 
-QT       += core gui webengine webview webchannel
+QT       += core gui webengine
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webenginewidgets webview
 
 TARGET = simple-browser
 TEMPLATE = app
