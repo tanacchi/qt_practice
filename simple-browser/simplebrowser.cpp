@@ -2,7 +2,7 @@
 #include "ui_simplebrowser.h"
 
 SimpleBrowser::SimpleBrowser(QWidget *parent) :
-    QWidget(parent),
+    QWebEngineView(parent),
     ui(new Ui::SimpleBrowser)
 {
     ui->setupUi(this);

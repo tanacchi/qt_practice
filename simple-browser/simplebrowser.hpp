@@ -2,12 +2,13 @@
 #define SIMPLEBROWSER_HPP
 
 #include <QWidget>
+#include <QWebEngineView>
 
 namespace Ui {
 class SimpleBrowser;
 }
 
-class SimpleBrowser : public QWidget
+class SimpleBrowser : public QWebEngineView
 {
     Q_OBJECT
 
