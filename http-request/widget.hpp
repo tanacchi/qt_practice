@@ -2,6 +2,7 @@
 #define WIDGET_HPP
 
 #include <QWidget>
+#include <QNetworkReply>
 
 namespace Ui {
 class Widget;
@@ -17,9 +18,12 @@ public:
 
 private slots:
     void on_pushButton_clicked();
+    void response_callback();
 
 private:
     Ui::Widget *ui;
+
+    QNetworkReply* reply = nullptr;
 };
 
 #endif // WIDGET_HPP
