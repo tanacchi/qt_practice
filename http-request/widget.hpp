@@ -18,12 +18,13 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-    void response_callback();
+    void response_callback(QNetworkReply* reply);
 
 private:
     Ui::Widget *ui;
 
-    QNetworkReply* reply = nullptr;
+    QNetworkAccessManager* managar;
+    QNetworkRequest request;
 };
 
 #endif // WIDGET_HPP

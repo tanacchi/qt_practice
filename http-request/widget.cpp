@@ -10,27 +10,27 @@
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Widget)
+    ui(new Ui::Widget),
+    managar{new QNetworkAccessManager()}
 {
     ui->setupUi(this);
+    connect(managar, &QNetworkAccessManager::finished, this, &Widget::response_callback);
 }
 
 Widget::~Widget()
 {
     delete ui;
+    delete managar;
 }
 
 void Widget::on_pushButton_clicked()
 {
   QUrl url("https://tanacchi-birdbrains.herokuapp.com/line");
-  QNetworkRequest request(url);
-  QNetworkAccessManager manager;
-  reply = manager.get(request);
-  connect(reply, &QNetworkReply::finished, this, &Widget::response_callback);
+  request.setUrl(url);
+  managar->get(request);
 }
 
-void Widget::response_callback()
+void Widget::response_callback(QNetworkReply* reply)
 {
-  std::cout << reply->size() << std::endl;
   ui->textBrowser->setText(reply->readAll());
 }
